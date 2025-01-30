@@ -39,6 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
     }
 
     // Перенаправление обратно в панель
-    header("Location: admin/admin_panel.php");
+    header("Location: admin_panel.php");
     exit;
 }
