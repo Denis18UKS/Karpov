@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $query = "SELECT *, fio, name FROM applications 
 JOIN users ON applications.user_id = users.id
-JOIN services ON applications.type_service_id = services.id WHERE user_id = '$user_id'";
+LEFT JOIN services ON applications.type_service_id = services.id WHERE user_id = '$user_id'";
 $result = mysqli_query($connect, $query);
 ?>
 
@@ -32,13 +32,14 @@ $result = mysqli_query($connect, $query);
             <td><?= $application['address'] ?></td>
             <td>
                 <?php
-                if (trim($application['name'])) {
+                if (trim($application['name'] ?? '')) {
                     echo htmlspecialchars($application['name']);
-                } else if (trim($application['custom_service'])) {
-                    echo htmlspecialchars($application['custom_service']);
+                } else if (trim($application['custom_service'] ?? '')) {
+                    echo htmlspecialchars("Иная услуга: " . `<br>` . $application['custom_service']);
                 }
                 ?>
             </td>
+
             <td><?= date("d.m.Y", strtotime($application['date_get_service'])) ?></td>
             <td><?= htmlspecialchars($application['time_get_service']) ?></td>
             <td><?= htmlspecialchars($application['type_payment']) ?></td>
